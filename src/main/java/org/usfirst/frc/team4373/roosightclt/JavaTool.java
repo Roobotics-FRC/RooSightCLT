@@ -1,6 +1,13 @@
 package org.usfirst.frc.team4373.roosightclt;
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
 import org.opencv.core.Core;
 
 import java.lang.reflect.Field;
@@ -11,6 +18,10 @@ import java.util.Arrays;
  * @author aaplmath
  */
 public class JavaTool {
+    /**
+     * Runs RooSight operations on the provided image based on the parameters passed.
+     * @param args Command-line arguments to be passed to the CLT.
+     */
     public static void main(String[] args) {
 
         // Automatically add OpenCV path
@@ -37,9 +48,9 @@ public class JavaTool {
                 newPaths[newPaths.length - 1] = "/usr/local/Cellar/opencv3/3.2.0/share/OpenCV/java";
                 usrPathsField.set(null, newPaths);
             }
-        } catch (Exception e) {
-            System.out.println("Warning: OpenCV could not be automatically loaded. " +
-                    "The following error occurred:" + e.getMessage());
+        } catch (Exception error) {
+            System.out.println("Warning: OpenCV could not be automatically loaded. "
+                    + "The following error occurred:" + error.getMessage());
         }
 
         // Main code
@@ -114,8 +125,8 @@ public class JavaTool {
 
         try {
             cmd = clParser.parse(options, args);
-        } catch (ParseException e) {
-            System.out.println(e.getMessage());
+        } catch (ParseException error) {
+            System.out.println(error.getMessage());
             formatter.printHelp("roosight", options);
             System.exit(1);
             return;
@@ -154,8 +165,8 @@ public class JavaTool {
 
         try {
             parser.parse();
-        } catch (Exception e) {
-            System.out.println("Error: Parse failure: " + e.getMessage());
+        } catch (Exception error) {
+            System.out.println("Error: Parse failure: " + error.getMessage());
             System.exit(1);
             return;
         }

@@ -1,8 +1,13 @@
 package org.usfirst.frc.team4373.roosightclt;
 
-import org.usfirst.frc.team4373.roosight.*;
+import org.usfirst.frc.team4373.roosight.RooBinaryImage;
+import org.usfirst.frc.team4373.roosight.RooColor;
+import org.usfirst.frc.team4373.roosight.RooColorImage;
+import org.usfirst.frc.team4373.roosight.RooConfig;
+import org.usfirst.frc.team4373.roosight.RooContour;
+import org.usfirst.frc.team4373.roosight.RooProcessor;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * Parses command line arguments.
@@ -22,41 +27,80 @@ public class Parser {
     private String maxArea;
     private String color;
 
+    /**
+     * Sets the String values to parse for the various filter operations.
+     * @param hsv A comma-separated list of six min/max values for hue, saturation, and value.
+     * @param hsl A comma-separated list of six min/max values for hue, saturation, and luminance.
+     * @param rgb A comma-separated list of six min/max values for red, green, and blue.
+     */
     public void setFilters(String hsv, String hsl, String rgb) {
         this.hsv = hsv;
         this.hsl = hsl;
         this.rgb = rgb;
     }
 
+    /**
+     * Sets the String values to parse for the allowable width range.
+     * @param min The minimum allowed width (--min-width).
+     * @param max The maximum allowed width (--max-width).
+     */
     public void setWidthRange(String min, String max) {
         this.minWidth = min;
         this.maxWidth = max;
     }
 
+    /**
+     * Sets the String values to parse for the allowable height range.
+     * @param min The minimum allowed height (--min-height).
+     * @param max The maximum allowed height (--max-height).
+     */
     public void setHeightRange(String min, String max) {
         this.minHeight = min;
         this.maxHeight = max;
     }
 
+    /**
+     * Sets the String values to parse for the allowable area range.
+     * @param min The minimum allowed area (--min-area).
+     * @param max The maximum allowed area (--max-area).
+     */
     public void setAreaRange(String min, String max) {
         this.minArea = min;
         this.maxArea = max;
     }
 
+    /**
+     * Sets the String value to parse for the input file.
+     * If this parameter is null, an exception will be thrown in parse().
+     * @param file The String containing the path to the input file.
+     */
     public void setInputFile(String file) {
         this.inputFile = file;
     }
 
+    /**
+     * Sets the String value to parse for the output file.
+     * @param file The String containing the path to where the output file should be saved.
+     */
     public void setOutputFile(String file) {
         this.outputFile = file;
     }
 
+    /**
+     * Sets the String values to parse for the contour colors to draw.
+     * @param color A three-value, comma-separated String containing
+     *              the RGB components of the desired color.
+     */
     public void setColor(String color) {
         this.color = color;
     }
 
+    /**
+     * Executes operations based on the collected parameters. Should only be called once all
+     * parameters have been loaded.
+     * @throws Exception Thrown if integer parsing fails or if an invalid argument is passed.
+     */
     public void parse() throws Exception {
-        RooColorImage colorImage = new RooColorImage(inputFile);
         RooConfig config = new RooConfig();
 
         // Filters
@@ -79,6 +123,7 @@ public class Parser {
         if (this.maxArea != null) config.setMaxArea(Integer.parseInt(this.maxArea));
 
         RooProcessor rooProcessor = new RooProcessor(config);
+        RooColorImage colorImage = new RooColorImage(inputFile);
         RooBinaryImage thresh = rooProcessor.processImage(colorImage);
         thresh.blur(1);
         RooContour[] contours = rooProcessor.findContours(thresh);
@@ -104,6 +149,15 @@ public class Parser {
         colorImage.writeToFile(outputLoc);
     }
 
+    /**
+     * Parses a given set of comma-separated parameters passed to the CLT and converts them to
+     * an int array, enforcing length checking.
+     * @param params The String containing the parameters to parse.
+     * @param expectedLength The expected number of parameters (i.e., the expected length of the
+     *                       returned array).
+     * @return An integer array containing the parsed values.
+     * @throws Exception Throws if the number of parameters is not equal to the expected length.
+     */
     private int[] parseParams(String params, int expectedLength) throws Exception {
         if (params != null) {
             String[] strParamArray = params.split(",");
@@ -114,9 +168,9 @@ public class Parser {
                 }
                 return intParamArray;
             } else {
-                throw new Exception(Integer.toString(expectedLength) + " arguments were expected," +
-                        " but the following " + Integer.toString(strParamArray.length) +
-                        " arguments were received: " + params);
+                throw new Exception(Integer.toString(expectedLength) + " arguments were expected,"
+                        + " but the following " + Integer.toString(strParamArray.length)
+                        + " arguments were received: " + params);
             }
         }
         return null;
