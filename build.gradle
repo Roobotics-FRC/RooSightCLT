@@ -1,0 +1,35 @@
+group 'org.usfirst.frc.team4373'
+version '1.0.0'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+
+mainClassName = 'org.usfirst.frc.team4373.roosightclt.JavaTool'
+applicationDefaultJvmArgs = ["-Djava.library.path=/usr/local/Cellar/opencv3/3.2.0/share/OpenCV/java"]
+
+repositories {
+    mavenCentral()
+    maven { url 'https://raw.githubusercontent.com/Roobotics-FRC/RooMaven/master' }
+}
+
+dependencies {
+    compile group: 'org.usfirst.frc.team4373', name: 'RooSight', version: '1.0.0'
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.3.1'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'org.usfirst.frc.team4373.roosightclt.JavaTool'
+        )
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
