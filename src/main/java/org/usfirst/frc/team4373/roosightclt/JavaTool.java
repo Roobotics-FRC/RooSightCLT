@@ -119,6 +119,10 @@ public class JavaTool {
         outputOpt.setRequired(false);
         options.addOption(outputOpt);
 
+        Option saveConfigOpt = new Option("s", "save-config", true,
+                "enables the saving of the serialized RooConfig options to a .viz file at the"
+                + "specified location");
+
         CommandLineParser clParser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
@@ -153,10 +157,12 @@ public class JavaTool {
         String color = cmd.getOptionValue("color");
 
         String output = cmd.getOptionValue("output");
+        String saveLoc = cmd.getOptionValue("save-config");
 
         Parser parser = new Parser();
         parser.setInputFile(file);
         parser.setOutputFile(output);
+        parser.setSaveLocation(saveLoc);
         parser.setFilters(hsv, hsl, rgb);
         parser.setWidthRange(minWidth, maxWidth);
         parser.setHeightRange(minHeight, maxHeight);

@@ -16,6 +16,7 @@ import java.awt.Color;
 public class Parser {
     private String inputFile;
     private String outputFile;
+    private String saveLoc;
     private String hsv;
     private String hsl;
     private String rgb;
@@ -87,6 +88,14 @@ public class Parser {
     }
 
     /**
+     * Sets the String value to parse for the file where serialized options will be saved.
+     * @param file The String containing the path to where the file should be saved.
+     */
+    public void setSaveLocation(String file) {
+        this.saveLoc = file;
+    }
+
+    /**
      * Sets the String values to parse for the contour colors to draw.
      * @param color A three-value, comma-separated String containing
      *              the RGB components of the desired color.
@@ -147,6 +156,9 @@ public class Parser {
             outputLoc = inputFile + ".out.jpg";
         }
         colorImage.writeToFile(outputLoc);
+
+        // Serialization options
+        if (this.saveLoc != null) config.save(saveLoc);
     }
 
     /**
