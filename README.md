@@ -1,5 +1,7 @@
 # RooSight Command-Line Tool
 
+![Travis CI build status](https://travis-ci.org/Roobotics-FRC/RooSightCLT.svg?branch=master)
+
 The RooSight CLT offers a command-line interface for interacting with the RooSight library.
 
 
