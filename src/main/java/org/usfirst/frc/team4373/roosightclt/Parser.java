@@ -134,6 +134,7 @@ public class Parser {
         RooProcessor rooProcessor = new RooProcessor(config);
         RooColorImage colorImage = new RooColorImage(inputFile);
         RooBinaryImage thresh = rooProcessor.processImage(colorImage);
+        // TODO: Upon next RooSight release, update to use RooConfig.setBlur() and add param
         thresh.blur(1);
         RooContour[] contours = rooProcessor.findContours(thresh);
 
