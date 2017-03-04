@@ -27,6 +27,7 @@ public class Parser {
     private String minArea;
     private String maxArea;
     private String color;
+    private String blur;
 
     /**
      * Sets the String values to parse for the various filter operations.
@@ -105,6 +106,14 @@ public class Parser {
     }
 
     /**
+     * Sets the String value to parse for the blur amount.
+     * @param blur The amount between 0 and 1 to blur.
+     */
+    public void setBlur(String blur) {
+        this.blur = blur;
+    }
+
+    /**
      * Executes operations based on the collected parameters. Should only be called once all
      * parameters have been loaded.
      * @throws Exception Thrown if integer parsing fails or if an invalid argument is passed.
@@ -130,12 +139,15 @@ public class Parser {
         if (this.maxHeight != null) config.setMaxHeight(Integer.parseInt(this.maxHeight));
         if (this.minArea != null) config.setMinArea(Integer.parseInt(this.minArea));
         if (this.maxArea != null) config.setMaxArea(Integer.parseInt(this.maxArea));
+        if (this.blur != null) {
+            config.setBlur(Integer.parseInt(blur));
+        } else {
+            config.setBlur(1);
+        }
 
         RooProcessor rooProcessor = new RooProcessor(config);
         RooColorImage colorImage = new RooColorImage(inputFile);
         RooBinaryImage thresh = rooProcessor.processImage(colorImage);
-        // TODO: Upon next RooSight release, update to use RooConfig.setBlur() and add param
-        thresh.blur(1);
         RooContour[] contours = rooProcessor.findContours(thresh);
 
         // Colors

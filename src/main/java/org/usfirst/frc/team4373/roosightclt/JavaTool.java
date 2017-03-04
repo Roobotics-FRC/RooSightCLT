@@ -119,9 +119,15 @@ public class JavaTool {
         outputOpt.setRequired(false);
         options.addOption(outputOpt);
 
+        Option blurOpt = new Option("b", "blur", true,
+                "takes the desired blur amount from 0 to 1");
+        blurOpt.setRequired(false);
+        options.addOption(blurOpt);
+
         Option saveConfigOpt = new Option("s", "save-config", true,
                 "enables the saving of the serialized RooConfig options to a .viz file at the"
                 + "specified location");
+        options.addOption(saveConfigOpt);
 
         CommandLineParser clParser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
@@ -154,6 +160,7 @@ public class JavaTool {
         String minArea = cmd.getOptionValue("min-area");
         String maxArea = cmd.getOptionValue("max-area");
 
+        String blur = cmd.getOptionValue("blur");
         String color = cmd.getOptionValue("color");
 
         String output = cmd.getOptionValue("output");
@@ -168,6 +175,7 @@ public class JavaTool {
         parser.setHeightRange(minHeight, maxHeight);
         parser.setAreaRange(minArea, maxArea);
         parser.setColor(color);
+        parser.setBlur(blur);
 
         try {
             parser.parse();
