@@ -14,6 +14,8 @@ usage: roosight
                                          area
  -amin,--min-area <arg>                  takes the min area of the target
                                          area
+ -b,--blur <arg>                         takes the desired blur amount
+                                         from 0 to 1
  -c,--color <arg>                        takes the desired color of the
                                          drawn contours
  -hmax,--max-height <arg>                takes the max height of the
@@ -33,6 +35,10 @@ usage: roosight
  -rgb,--red-green-blue <arg>             takes comma separated min/max
                                          values in the form
                                          rmin,rmax,gmin,gmax,bmin,bmax
+ -s,--save-config <arg>                  enables the saving of the
+                                         serialized RooConfig options to a
+                                         .viz file at thespecified
+                                         location
  -wmax,--max-width <arg>                 takes the max width of the target
                                          area
  -wmin,--min-width <arg>                 takes the min width of the target

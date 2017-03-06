@@ -126,7 +126,7 @@ public class JavaTool {
 
         Option saveConfigOpt = new Option("s", "save-config", true,
                 "enables the saving of the serialized RooConfig options to a .viz file at the"
-                + "specified location");
+                + " specified location");
         options.addOption(saveConfigOpt);
 
         CommandLineParser clParser = new DefaultParser();
