@@ -37,7 +37,7 @@ usage: roosight
                                          rmin,rmax,gmin,gmax,bmin,bmax
  -s,--save-config <arg>                  enables the saving of the
                                          serialized RooConfig options to a
-                                         .viz file at thespecified
+                                         .viz file at the specified
                                          location
  -wmax,--max-width <arg>                 takes the max width of the target
                                          area
