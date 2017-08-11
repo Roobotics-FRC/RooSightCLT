@@ -1,5 +1,5 @@
 group 'org.usfirst.frc.team4373'
-version '1.0.0'
+version '1.0.1'
 
 apply plugin: 'java'
 apply plugin: 'maven'
@@ -11,7 +11,7 @@ apply plugin: 'checkstyle'
 sourceCompatibility = 1.8
 
 mainClassName = 'org.usfirst.frc.team4373.roosightclt.JavaTool'
-applicationDefaultJvmArgs = ["-Djava.library.path=/usr/local/Cellar/opencv3/3.2.0/share/OpenCV/java"]
+applicationDefaultJvmArgs = ["-Djava.library.path=/usr/local/Cellar/opencv3/3.3.0_1/share/OpenCV/java"]
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.usfirst.frc.team4373', name: 'RooSight', version: '1.0.2'
+    compile group: 'org.usfirst.frc.team4373', name: 'RooSight', version: '1.0.3'
     compile group: 'commons-cli', name: 'commons-cli', version: '1.3.1'
 }
 

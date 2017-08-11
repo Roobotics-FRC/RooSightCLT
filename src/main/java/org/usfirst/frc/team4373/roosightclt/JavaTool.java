@@ -37,7 +37,7 @@ public class JavaTool {
             // Check if the path to add is already present
             boolean exists = false;
             for (String path : paths) {
-                if (path.equals("/usr/local/Cellar/opencv3/3.2.0/share/OpenCV/java")) {
+                if (path.equals("/usr/local/Cellar/opencv3/3.3.0_1/share/OpenCV/java")) {
                     exists = true;
                 }
             }
@@ -45,7 +45,8 @@ public class JavaTool {
             // Add the path if it hasn't already been added
             if (!exists) {
                 final String[] newPaths = Arrays.copyOf(paths, paths.length + 1);
-                newPaths[newPaths.length - 1] = "/usr/local/Cellar/opencv3/3.2.0/share/OpenCV/java";
+                newPaths[newPaths.length - 1] =
+                        "/usr/local/Cellar/opencv3/3.3.0_1/share/OpenCV/java";
                 usrPathsField.set(null, newPaths);
             }
         } catch (Exception error) {
