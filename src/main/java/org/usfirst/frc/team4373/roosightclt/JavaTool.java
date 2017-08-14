@@ -25,6 +25,10 @@ public class JavaTool {
     public static void main(String[] args) {
 
         // Automatically add OpenCV path
+        String openCVPath = "/usr/local/Cellar/opencv3/3.3.0_1/share/OpenCV/java";
+        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+            openCVPath = "C:\\Users\\robotics\\Downloads\\opencv\\build\\java\\x64";
+        }
 
         try {
             // Get usr_paths
@@ -37,7 +41,7 @@ public class JavaTool {
             // Check if the path to add is already present
             boolean exists = false;
             for (String path : paths) {
-                if (path.equals("/usr/local/Cellar/opencv3/3.3.0_1/share/OpenCV/java")) {
+                if (path.equals(openCVPath)) {
                     exists = true;
                 }
             }
@@ -46,12 +50,12 @@ public class JavaTool {
             if (!exists) {
                 final String[] newPaths = Arrays.copyOf(paths, paths.length + 1);
                 newPaths[newPaths.length - 1] =
-                        "/usr/local/Cellar/opencv3/3.3.0_1/share/OpenCV/java";
+                        openCVPath;
                 usrPathsField.set(null, newPaths);
             }
         } catch (Exception error) {
             System.out.println("Warning: OpenCV could not be automatically loaded. "
-                    + "The following error occurred:" + error.getMessage());
+                    + "The following error occurred: " + error.getMessage());
         }
 
         // Main code

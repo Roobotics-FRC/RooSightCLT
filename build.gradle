@@ -11,7 +11,7 @@ apply plugin: 'checkstyle'
 sourceCompatibility = 1.8
 
 mainClassName = 'org.usfirst.frc.team4373.roosightclt.JavaTool'
-applicationDefaultJvmArgs = ["-Djava.library.path=/usr/local/Cellar/opencv3/3.3.0_1/share/OpenCV/java"]
+// applicationDefaultJvmArgs = ["-Djava.library.path=/usr/local/Cellar/opencv3/3.3.0_1/share/OpenCV/java"]
 
 repositories {
     mavenCentral()
