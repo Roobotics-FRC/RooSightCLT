@@ -171,19 +171,19 @@ public class Parser {
 
         // Processing
         if (inputCamera != null) {
-             Streamer stream = new Streamer();
-             stream.streamFromCamera(inputCamera, image -> {
-                 try {
-                     RooColorImage colorImage = new RooColorImage(image);
-                     RooBinaryImage thresh = processor.processImage(colorImage);
-                     RooContour[] contours = processor.findContours(thresh);
-                     // Fancy math stuff
-                     // Put something to stdout or something
-                 } catch (Exception exception) {
-                     System.out.println("ERROR: " + exception.getLocalizedMessage());
-                     System.exit(1);
-                 }
-             });
+            Streamer stream = new Streamer();
+            stream.streamFromCamera(inputCamera, image -> {
+                try {
+                    RooColorImage colorImage = new RooColorImage(image);
+                    RooBinaryImage thresh = processor.processImage(colorImage);
+                    RooContour[] contours = processor.findContours(thresh);
+                    // Fancy math stuff
+                    // Put something to stdout or something
+                } catch (Exception exception) {
+                    System.out.println("ERROR: " + exception.getLocalizedMessage());
+                    System.exit(1);
+                }
+            });
         } else {
             RooColorImage colorImage = new RooColorImage(inputFile);
             RooBinaryImage thresh = processor.processImage(colorImage);
