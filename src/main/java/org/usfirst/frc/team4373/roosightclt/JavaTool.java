@@ -66,7 +66,7 @@ public class JavaTool {
 
         Option fileOpt = new Option("i", "input", true,
                 "takes the path to the image to be filtered");
-        fileOpt.setRequired(true);
+        fileOpt.setRequired(false);
         options.addOption(fileOpt);
 
         Option hsvOpt = new Option("hsv", "hue-saturation-value", true,
@@ -132,7 +132,14 @@ public class JavaTool {
         Option saveConfigOpt = new Option("s", "save-config", true,
                 "enables the saving of the serialized RooConfig options to a .viz file at the"
                 + " specified location");
+        saveConfigOpt.setRequired(false);
         options.addOption(saveConfigOpt);
+
+        Option camStreamOpt = new Option("cam", "camera", true,
+                "continuously processes a stream from the camera at the specified IP address,"
+                        + " overriding the --input and --output parameters");
+        camStreamOpt.setRequired(false);
+        options.addOption(camStreamOpt);
 
         CommandLineParser clParser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();

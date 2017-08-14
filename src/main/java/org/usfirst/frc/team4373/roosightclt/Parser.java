@@ -28,6 +28,7 @@ public class Parser {
     private String maxArea;
     private String color;
     private String blur;
+    private String inputCamera;
 
     /**
      * Sets the String values to parse for the various filter operations.
@@ -81,6 +82,14 @@ public class Parser {
     }
 
     /**
+     * Sets the String value for the camera's IP address.
+     * @param camera The String containing the camera's IP address.
+     */
+    public void setInputCamera(String camera) {
+        this.inputCamera = camera;
+    }
+
+    /**
      * Sets the String value to parse for the output file.
      * @param file The String containing the path to where the output file should be saved.
      */
@@ -119,6 +128,7 @@ public class Parser {
      * @throws Exception Thrown if integer parsing fails or if an invalid argument is passed.
      */
     public void parse() throws Exception {
+
         RooConfig config = new RooConfig();
 
         // Filters
@@ -145,33 +155,50 @@ public class Parser {
             config.setBlur(1);
         }
 
-        RooProcessor rooProcessor = new RooProcessor(config);
-        RooColorImage colorImage = new RooColorImage(inputFile);
-        RooBinaryImage thresh = rooProcessor.processImage(colorImage);
-        RooContour[] contours = rooProcessor.findContours(thresh);
-
         // Colors
-        Color contourColor;
         int[] rgbComps = parseParams(this.color, 3);
+        Color contourColor;
         if (rgbComps != null) {
             contourColor = new Color(rgbComps[0], rgbComps[1], rgbComps[2]);
         } else {
             contourColor = Color.GREEN;
         }
-        colorImage.drawContours(contours, new RooColor(contourColor), 3);
-        colorImage.markContours(contours, new RooColor(contourColor), 2);
-
-        // Output
-        String outputLoc;
-        if (this.outputFile != null) {
-            outputLoc = this.outputFile;
-        } else {
-            outputLoc = inputFile + ".out.jpg";
-        }
-        colorImage.writeToFile(outputLoc);
 
         // Serialization options
         if (this.saveLoc != null) config.save(saveLoc);
+
+        RooProcessor processor = new RooProcessor(config);
+
+        // Processing
+        if (inputCamera != null) {
+             Streamer stream = new Streamer();
+             stream.streamFromCamera(inputCamera, image -> {
+                 try {
+                     RooColorImage colorImage = new RooColorImage(image);
+                     RooBinaryImage thresh = processor.processImage(colorImage);
+                     RooContour[] contours = processor.findContours(thresh);
+                     // Fancy math stuff
+                     // Put something to stdout or something
+                 } catch (Exception exception) {
+                     System.out.println("ERROR: " + exception.getLocalizedMessage());
+                     System.exit(1);
+                 }
+             });
+        } else {
+            RooColorImage colorImage = new RooColorImage(inputFile);
+            RooBinaryImage thresh = processor.processImage(colorImage);
+            RooContour[] contours = processor.findContours(thresh);
+
+            colorImage.drawContours(contours, new RooColor(contourColor), 3);
+            colorImage.markContours(contours, new RooColor(contourColor), 2);
+            String outputLoc;
+            if (this.outputFile != null) {
+                outputLoc = this.outputFile;
+            } else {
+                outputLoc = inputFile + ".out.jpg";
+            }
+            colorImage.writeToFile(outputLoc);
+        }
     }
 
     /**
