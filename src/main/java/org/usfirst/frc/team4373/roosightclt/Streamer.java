@@ -10,18 +10,20 @@ public class Streamer {
     private AtomicBoolean keepPolling = new AtomicBoolean(true);
 
     /**
-     * I hate JavaDoc.
+     * Continuously streams images from a camera.
      * @param ip The IP address of the camera from which to stream.
      * @param handler The handler object whose handle() method will be called
      *                when an image is received.
      */
     public void streamFromCamera(String ip, StreamImageHandler handler) {
-        Runnable run = () -> {
+        Runnable streamLoop = () -> {
             while (keepPolling.get()) {
-                // Get the image
-                // Call handler.handle(bytes)
+                // IMPLEMENT PSEUDOCODE:
+                // byte[] imgBytes = getBytesFromCamera(ip)
+                // handler.handle(imgBytes)
             }
         };
+        streamLoop.run();
     }
 
     /**
