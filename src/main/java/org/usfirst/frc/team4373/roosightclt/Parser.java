@@ -171,10 +171,9 @@ public class Parser {
 
         // Processing
         if (inputCamera != null) {
-            Streamer stream = new Streamer();
-            stream.streamFromCamera(inputCamera, image -> {
+            Streamer streamer = new Streamer(inputCamera, imageBytes -> {
                 try {
-                    RooColorImage colorImage = new RooColorImage(image);
+                    RooColorImage colorImage = new RooColorImage(imageBytes);
                     RooBinaryImage thresh = processor.processImage(colorImage);
                     RooContour[] contours = processor.findContours(thresh);
                     // Fancy math stuff
@@ -184,6 +183,8 @@ public class Parser {
                     System.exit(1);
                 }
             });
+            Thread streamThread = new Thread(streamer);
+            streamThread.run();
         } else {
             RooColorImage colorImage = new RooColorImage(inputFile);
             RooBinaryImage thresh = processor.processImage(colorImage);
