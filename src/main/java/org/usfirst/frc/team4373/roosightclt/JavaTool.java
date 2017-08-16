@@ -155,8 +155,10 @@ public class JavaTool {
         }
 
         String file = cmd.getOptionValue("input");
-        if (file == null) {
-            System.out.println("Error: RooSight cannot run without an input file argument.");
+        String cam = cmd.getOptionValue("camera");
+        if (file == null && cam == null) {
+            System.out.println("Error: RooSight cannot run without an input source.");
+            formatter.printHelp("roosight", options);
             System.exit(1);
             return;
         }
@@ -180,6 +182,7 @@ public class JavaTool {
 
         Parser parser = new Parser();
         parser.setInputFile(file);
+        parser.setInputCamera(cam);
         parser.setOutputFile(output);
         parser.setSaveLocation(saveLoc);
         parser.setFilters(hsv, hsl, rgb);

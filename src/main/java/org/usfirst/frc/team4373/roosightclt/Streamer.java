@@ -15,6 +15,13 @@ public class Streamer implements Runnable {
     private String ip;
     private StreamImageHandler handler;
 
+    private AtomicBoolean keepPolling = new AtomicBoolean(true);
+    private static final String USER_AGENT = "Mozilla/5.0";
+
+    public interface StreamImageHandler {
+        void handle(byte[] image);
+    }
+
     /**
      * Constructs a new Streamer object.
      * @param ip The IP of the camera from which to stream.
@@ -23,13 +30,6 @@ public class Streamer implements Runnable {
     public Streamer(String ip, StreamImageHandler handler) {
         this.ip = ip;
         this.handler = handler;
-    }
-
-    private AtomicBoolean keepPolling = new AtomicBoolean(true);
-    private static final String USER_AGENT = "Mozilla/5.0";
-
-    public interface StreamImageHandler {
-        void handle(byte[] image);
     }
 
     @Override
@@ -57,7 +57,6 @@ public class Streamer implements Runnable {
                 ++counter;
                 System.out.println("Got frame [" + counter + "] : Height " + i.getHeight()
                         + "; Width: " + i.getWidth());
-
             }
         } catch (Exception exception) {
             System.out.println(exception.getLocalizedMessage());
