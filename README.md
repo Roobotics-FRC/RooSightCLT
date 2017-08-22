@@ -4,6 +4,13 @@
 
 The RooSight CLT offers a command-line interface for interacting with the RooSight library.
 
+### Setup
+
+* Download the [latest RooSightCLT build](https://www.github.com/Roobotics-FRC/RooSightCLT/releases/latest)
+* Install OpenCV
+    * On Windows, go to the [OpenCV website](http://www.opencv.org), download the packed release compatible with your downloaded version of RooSight, and extract it to `C:\Users\[username]\Downloads`
+    * On macOS, install [Homebrew](https://brew.sh), run `brew tap Roobotics-FRC/RooBrew`, and then install OpenCV using `brew install opencv3classic --with-java`
+* Run RooSightCLT with `java -jar [path/to/RooSightCLT-version.jar] [args]` 
 
 
 ### Usage

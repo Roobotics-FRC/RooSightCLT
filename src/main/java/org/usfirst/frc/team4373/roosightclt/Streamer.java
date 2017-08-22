@@ -70,7 +70,7 @@ public class Streamer implements Runnable {
      * @return byte[] of the JPEG
      * @throws IOException IO error.
      */
-    private static byte[] nextIb(InputStream urlStream) throws IOException {
+    private byte[] nextIb(InputStream urlStream) throws IOException {
         System.out.println("test ib");
         int currByte = -1;
         StringWriter stringWriter = new StringWriter();

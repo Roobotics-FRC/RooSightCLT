@@ -25,7 +25,8 @@ public class JavaTool {
     public static void main(String[] args) {
 
         // Automatically add OpenCV path
-        String openCVPath = "/usr/local/Cellar/opencv3/3.3.0_1/share/OpenCV/java";
+
+        String openCVPath = "/usr/local/Cellar/opencv3classic/3.3.0_1/share/OpenCV/java";
         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
             openCVPath = "C:\\Users\\robotics\\Downloads\\opencv\\build\\java\\x64";
         }
