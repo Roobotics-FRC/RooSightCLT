@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4373.roosightclt;
 
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.usfirst.frc.team4373.roosight.RooBinaryImage;
 import org.usfirst.frc.team4373.roosight.RooColor;
 import org.usfirst.frc.team4373.roosight.RooColorImage;
@@ -171,18 +172,7 @@ public class Parser {
 
         // Processing
         if (inputCamera != null) {
-            Streamer streamer = new Streamer(inputCamera, imageBytes -> {
-                try {
-                    RooColorImage colorImage = new RooColorImage(imageBytes);
-                    RooBinaryImage thresh = processor.processImage(colorImage);
-                    RooContour[] contours = processor.findContours(thresh);
-                    // Fancy math stuff
-                    // Put something to stdout or something
-                } catch (Exception exception) {
-                    System.out.println("ERROR: " + exception.getLocalizedMessage());
-                    System.exit(1);
-                }
-            });
+            Streamer streamer = new Streamer(inputCamera, new RooStreamHandler(processor));
             Thread streamThread = new Thread(streamer);
             streamThread.run();
         } else {
