@@ -27,7 +27,8 @@ public class RooStreamHandler implements Streamer.StreamImageHandler {
                 newSetpoint = xPixel * conversionFactor;
             }
             System.out.println("[SETPOINT] " + String.valueOf(newSetpoint));
-            NetworkTable.getTable("org.usfirst.frc.team4373.vision").putNumber("setpoint", newSetpoint);
+            NetworkTable.getTable("org.usfirst.frc.team4373.vision").putNumber("setpoint",
+                    newSetpoint);
         } catch (Exception exception) {
             System.out.println("ERROR: " + exception.getLocalizedMessage());
             System.exit(1);

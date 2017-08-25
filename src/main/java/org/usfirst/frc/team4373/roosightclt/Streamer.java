@@ -1,9 +1,9 @@
 package org.usfirst.frc.team4373.roosightclt;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.opencv.videoio.VideoCapture;
 import org.opencv.core.Mat;
+import org.opencv.videoio.VideoCapture;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Streamer implements Runnable {
 
