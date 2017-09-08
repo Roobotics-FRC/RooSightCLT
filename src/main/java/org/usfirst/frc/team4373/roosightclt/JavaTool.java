@@ -27,6 +27,9 @@ public class JavaTool {
         // Automatically add OpenCV path
 
         String openCVPath = "/usr/local/Cellar/opencv3classic/3.3.0_1/share/OpenCV/java";
+        String ntPath = "~/wpilib/java/current/lib/native/lib";
+        ntPath = ntPath.replaceFirst("^~",System.getProperty("user.home"));
+
         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
             openCVPath = "C:\\Users\\robotics\\Downloads\\opencv\\build\\java\\x64";
         }
@@ -40,18 +43,31 @@ public class JavaTool {
             final String[] paths = (String[]) usrPathsField.get(null);
 
             // Check if the path to add is already present
-            boolean exists = false;
+            boolean ocvExists = false;
+            boolean ntExists = false;
             for (String path : paths) {
                 if (path.equals(openCVPath)) {
-                    exists = true;
+                    ocvExists = true;
+                } else if (path.equals(ntPath)) {
+                    ntExists = true;
                 }
             }
 
-            // Add the path if it hasn't already been added
-            if (!exists) {
-                final String[] newPaths = Arrays.copyOf(paths, paths.length + 1);
-                newPaths[newPaths.length - 1] =
-                        openCVPath;
+            // Add missing paths
+            int addend = (!ocvExists ? 1 : 0) + (!ntExists ? 1 : 0);
+            if (addend > 0) {
+                String[] newPaths = Arrays.copyOf(paths, paths.length + addend);
+                switch (addend) {
+                    case 1:
+                        newPaths[newPaths.length - 1] = !ocvExists ? openCVPath : ntPath;
+                        break;
+                    case 2:
+                        newPaths[newPaths.length - 2] = openCVPath;
+                        newPaths[newPaths.length - 1] = ntPath;
+                        break;
+                    default:
+                        break;
+                }
                 usrPathsField.set(null, newPaths);
             }
         } catch (Exception error) {

@@ -29,10 +29,12 @@ public class Streamer implements Runnable {
     @Override
     public void run() {
         VideoCapture capturer = new VideoCapture();
-        capturer.open(ip + "/?dummy=param.mjpg");
+        capturer.open(ip + "&dummy=param.mjpg"); // TODO: Add logic
         Mat imageMat = new Mat();
         while (keepPolling.get()) {
-            capturer.read(imageMat);
+            System.out.println("START");
+            boolean didItWork = capturer.read(imageMat);
+            if (!didItWork) System.exit(1);
             handler.handle(imageMat);
         }
     }

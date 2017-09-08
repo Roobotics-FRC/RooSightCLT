@@ -17,6 +17,7 @@ public class RooStreamHandler implements Streamer.StreamImageHandler {
     @Override
     public void handle(Mat imageMat) {
         try {
+            System.out.println(imageMat.get(1, 1)[0]);
             RooColorImage colorImage = new RooColorImage(imageMat);
             RooBinaryImage thresh = processor.processImage(colorImage);
             RooContour[] contours = processor.findContours(thresh);
