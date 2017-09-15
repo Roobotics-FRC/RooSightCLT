@@ -7,6 +7,9 @@ import org.usfirst.frc.team4373.roosight.RooColorImage;
 import org.usfirst.frc.team4373.roosight.RooContour;
 import org.usfirst.frc.team4373.roosight.RooProcessor;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class RooStreamHandler implements Streamer.StreamImageHandler {
     private RooProcessor processor;
 
@@ -17,8 +20,12 @@ public class RooStreamHandler implements Streamer.StreamImageHandler {
     @Override
     public void handle(Mat imageMat) {
         try {
-            System.out.println(imageMat.get(1, 1)[0]);
             RooColorImage colorImage = new RooColorImage(imageMat);
+            byte[] bytes = colorImage.getBytes();
+            FileOutputStream out = new FileOutputStream("test-output-file");
+            out.write(bytes);
+            out.close();
+            System.exit(1);
             RooBinaryImage thresh = processor.processImage(colorImage);
             RooContour[] contours = processor.findContours(thresh);
             double newSetpoint = 4373d;
@@ -28,8 +35,8 @@ public class RooStreamHandler implements Streamer.StreamImageHandler {
                 newSetpoint = xPixel * conversionFactor;
             }
             System.out.println("[SETPOINT] " + String.valueOf(newSetpoint));
-            NetworkTable.getTable("org.usfirst.frc.team4373.vision").putNumber("setpoint",
-                    newSetpoint);
+            // NetworkTable.getTable("org.usfirst.frc.team4373.vision").putNumber("setpoint",
+            //         newSetpoint);
         } catch (Exception exception) {
             System.out.println("ERROR: " + exception.getLocalizedMessage());
             System.exit(1);

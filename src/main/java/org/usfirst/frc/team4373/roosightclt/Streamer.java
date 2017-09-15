@@ -32,9 +32,8 @@ public class Streamer implements Runnable {
         capturer.open(ip + "&dummy=param.mjpg"); // TODO: Add logic
         Mat imageMat = new Mat();
         while (keepPolling.get()) {
-            System.out.println("START");
-            boolean didItWork = capturer.read(imageMat);
-            if (!didItWork) System.exit(1);
+            boolean didRead = capturer.read(imageMat);
+            if (!didRead) System.out.println("[ERROR] Failed to read.");
             handler.handle(imageMat);
         }
     }
