@@ -28,13 +28,13 @@ public class RooStreamHandler implements Streamer.StreamImageHandler {
             System.exit(1);
             RooBinaryImage thresh = processor.processImage(colorImage);
             RooContour[] contours = processor.findContours(thresh);
-            double newSetpoint = 4373d;
+            double newOffset = 4373d;
             if (contours.length > 0) {
                 double xPixel = contours[0].getCenter().getX();
                 double conversionFactor = 47 / 640;
-                newSetpoint = xPixel * conversionFactor;
+                newOffset = xPixel * conversionFactor;
             }
-            System.out.println("[SETPOINT] " + String.valueOf(newSetpoint));
+            System.out.println("[OFFSET] " + String.valueOf(newOffset));
             // NetworkTable.getTable("org.usfirst.frc.team4373.vision").putNumber("setpoint",
             //         newSetpoint);
         } catch (Exception exception) {
